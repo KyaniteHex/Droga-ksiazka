@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .other-book-slider-element{
+        @apply w-full grid gap-1;
+    }
+    
+    .slider-book-img{
+        @apply w-44;
+    }
+    .slider-book-name{
+        @apply inline-block;
+    }
+}
