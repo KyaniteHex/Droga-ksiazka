@@ -319,14 +319,40 @@ function App() {
 							</div>
 						</div>
 					</div>
-					<div className='add-recent w-3/4 mt-14 h-52'>
-						<div className='reviews-comment mt-10 grid grid-cols-2'>
-							<span>Czytałeś? Możesz podzielić się swoją opinią</span>
-							<button className='bg-red-400 rounded-md w-16 text-white-400'>
-								Dodaj recenzję
-							</button>
+					<div className='book-desctibe-line mt-16 border-t border-gray-200 h-0'></div>
+					<div className='add-recent w-5/6 mt-16 p-6 mx-auto rounded-lg'>
+						<div className='reviews-comment text-center'>
+							<span className='text-xl font-'>
+								Czytałeś? Tutaj możesz podzielić się swoją opinią
+							</span>
 						</div>
-						<div className='reviews-add-comment'></div>
+						<div className='reviews-add-comment mt-4'>
+							<div className='flex justify-center'>
+								<label className='mr-4 text-lg' htmlFor='rating'>
+									Twoja ocena:
+								</label>
+								<select
+									id='rating'
+									name='rating'
+									className='border border-gray-300 rounded px-2 py-1'>
+									<option value='5'>5 Gwiazdek</option>
+									<option value='4'>4 Gwiazdki</option>
+									<option value='3'>3 Gwiazdki</option>
+									<option value='2'>2 Gwiazdki</option>
+									<option value='1'>1 Gwiazdka</option>
+								</select>
+							</div>
+							<div className='book-desctibe-line mt-5 border-t border-gray-200 h-0'></div>
+							<textarea
+								className='w-full resize-none mt-6 border-b-2 border-gray-300 rounded p-2 outline-none'
+								rows='4'
+								placeholder='Twoja opinia...'></textarea>
+							<div className='flex justify-end mt-4'>
+								<button className='bg-orange-400 text-white px-4 py-2 rounded hover:bg-orange-500'>
+									Dodaj recenzję
+								</button>
+							</div>
+						</div>
 					</div>
 				</section>
 			</div>
