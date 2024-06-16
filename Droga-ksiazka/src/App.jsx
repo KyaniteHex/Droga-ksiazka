@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Book from "./book.jsx";
 import Slider from "./slider.jsx";
-import Reviews from "./reviews.jsx"
+import Reviews from "./reviews.jsx";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-	const [count, setCount] = useState(0);
-
 	return (
 		<>
 			<div className='container pt-2 bg-white w-4/6 grid place-items-center'>
@@ -16,7 +14,7 @@ function App() {
 					<div className='header-top h-56 mb-6 grid grid-cols-4 place-items-center w-full'>
 						<div className='logo w-52'>
 							<a href='#'>
-								<img src='src\img\logo-no-background.png' alt='Logo' />
+								<img src={'/logo.png'} alt='Logo' />
 							</a>
 						</div>
 						<div className='search-bar w-full col-span-3'>
@@ -91,9 +89,13 @@ function App() {
 						</ul>
 					</nav>
 				</header>
-				<Book />
+				<Routes>
+					<Route path='/ksiazka/:currentBook' element={<Book />} />
+				</Routes>
 				<Slider />
-				<Reviews />
+				<Routes>
+					<Route path='/ksiazka/:currentBook' element={<Reviews />} />
+				</Routes>
 			</div>
 		</>
 	);

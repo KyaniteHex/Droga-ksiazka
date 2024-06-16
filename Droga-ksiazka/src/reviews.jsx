@@ -1,7 +1,44 @@
-import {useState} from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Comment from "./comment";
 
 const Reviews = () => {
-	const [count, setCount] = useState(0);
+	const { currentBook } = useParams();
+	const [book, setBook] = useState(null);
+	const [error, setError] = useState(null);
+
+	useEffect(() => {
+		axios
+			.get(`http://localhost:5000/api/ksiazka/${currentBook}`)
+			.then((response) => {
+				setBook(response.data);
+			})
+			.catch((err) => {
+				setError("Reviews error");
+			});
+	}, [currentBook]);
+
+	if (error) {
+		return <div>{error}</div>;
+	}
+
+	if (!book) {
+		return <div>Ładowanie...</div>;
+	}
+
+	const ratesSum = book.opinie.reduce((acc, opinia) => acc + opinia.ocena, 0);
+	const averageRating = ratesSum / book.opinie.length;
+	const percentageReview = (averageRating / 5) * 100;
+	const percentageRate = (book, rateNumber) => {
+		const ratingArray = book.opinie.map((opinia) => opinia.ocena);
+		return (
+			(ratingArray.filter((v) => v === rateNumber).length /
+				ratingArray.length) *
+			100
+		);
+	};
+
 	return (
 		<>
 			<section className='reviews w-10/12 mt-10 border-t border-gray-300'>
@@ -13,21 +50,28 @@ const Reviews = () => {
 						<div className='rate-rounded rounded-full border border-orange-400 w-32 h-32 flex place-items-center place-content-center'>
 							<div
 								className='bg-orange-200 rounded-full place-content-center'
-								style={{ height: "90%", width: "90%" }}>
-								<span className='rate-ratio text-xl font-bold'>4.9</span>
+								style={{
+									height: `${percentageReview}%`,
+									width: `${percentageReview}%`,
+								}}>
+								<span className='rate-ratio text-xl font-bold'>
+									{averageRating}
+								</span>
 							</div>
 						</div>
 					</div>
 					<div className='w-full'>
 						<div className='rate-stars-scale grid grid-rows-5 gap-3 mt-5 place-items-end'>
-							<div class='rating-slider flex w-3/4'>
-								<span class='text-sm'>
+							<div className='rating-slider flex w-3/4'>
+								<span className='text-sm'>
 									5 <i className='fa-solid fa-star text-orange-400'></i>
 								</span>
-								<div class='bg-orange-200 mx-2 w-2/3 rounded-lg'>
-									<div class='bg-orange-400 w-6/12 h-full rounded-lg'></div>
+								<div className='bg-orange-200 mx-2 w-2/3 rounded-lg'>
+									<div
+										className='bg-orange-400 h-full rounded-lg'
+										style={{ width: `${percentageRate(book, 5)}%` }}></div>
 								</div>
-								<span class='flex'>50%</span>
+								<span className='flex'>{percentageRate(book, 5)}%</span>
 							</div>
 
 							<div className='rating-slider flex w-3/4'>
@@ -35,36 +79,44 @@ const Reviews = () => {
 									4 <i className='fa-solid fa-star text-orange-400'></i>
 								</span>
 								<div className='bg-orange-200 mx-2 w-2/3 rounded-lg'>
-									<div className='bg-orange-400 w-4/12 h-full rounded-lg'></div>
+									<div
+										className='bg-orange-400 h-full rounded-lg'
+										style={{ width: `${percentageRate(book, 4)}%` }}></div>
 								</div>
-								<span className='flex'>25%</span>
+								<span className='flex'>{percentageRate(book, 4)}%</span>
 							</div>
 							<div className='rating-slider flex w-3/4'>
 								<span className='text-sm'>
 									3 <i className='fa-solid fa-star text-orange-400'></i>
 								</span>
 								<div className='bg-orange-200 mx-2 w-2/3 rounded-lg'>
-									<div className='bg-orange-400  w-2/12 h-full rounded-lg'></div>
+									<div
+										className='bg-orange-400 h-full rounded-lg'
+										style={{ width: `${percentageRate(book, 3)}%` }}></div>
 								</div>
-								<span className='flex'>15%</span>
+								<span className='flex'>{percentageRate(book, 3)}%</span>
 							</div>
 							<div className='rating-slider flex w-3/4'>
 								<span className='text-sm'>
 									2 <i className='fa-solid fa-star text-orange-400'></i>
 								</span>
 								<div className='bg-orange-200 mx-2 w-2/3 rounded-lg'>
-									<div className='bg-orange-400  w-1/12 h-full rounded-lg'></div>
+									<div
+										className='bg-orange-400 h-full rounded-lg'
+										style={{ width: `${percentageRate(book, 2)}%` }}></div>
 								</div>
-								<span className='flex'>5%</span>
+								<span className='flex'>{percentageRate(book, 2)}%</span>
 							</div>
 							<div className='rating-slider flex w-3/4'>
 								<span className='text-sm'>
 									1 <i className='fa-solid fa-star text-orange-400'></i>
 								</span>
 								<div className='bg-orange-200 mx-2 w-2/3 rounded-lg'>
-									<div className='bg-orange-400 w-0 h-full rounded-lg'></div>
+									<div
+										className='bg-orange-400 h-full rounded-lg'
+										style={{ width: `${percentageRate(book, 1)}%` }}></div>
 								</div>
-								<span className='flex'>0</span>
+								<span className='flex'>{percentageRate(book, 1)}%</span>
 							</div>
 						</div>
 					</div>
@@ -102,6 +154,10 @@ const Reviews = () => {
 								Dodaj recenzję
 							</button>
 						</div>
+						<div className='book-desctibe-line mt-5 border-t border-gray-200 h-0'></div>
+						{book.opinie.map((opinia) => (
+							<Comment key={opinia._id} book_opinia={opinia} />
+						))}
 					</div>
 				</div>
 			</section>
