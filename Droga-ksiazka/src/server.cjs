@@ -9,38 +9,45 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-	.connect("mongodb://127.0.0.1:27017/droga_ksiazka", {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
+	.connect(
+		"mongodb+srv://talerzyk:kbhp8Ve7@cluster0.ldazmux.mongodb.net/droga_ksiazka",
+		{
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		}
+	)
 	.then(() => console.log("Succes connect to Database"))
 	.catch((err) => console.error("Could not connect to Database", err));
 
 const ReviewSchema = new mongoose.Schema({
 	ocena: {
 		type: Number,
-		required: true,
 	},
 	recenzja: {
 		type: String,
-		required: true,
+	},
+	nazwa_uzytkownika: {
+		type: String,
+	},
+	data_dodania: {
+		type: Date,
 	},
 });
 
 const BookSchema = new mongoose.Schema({
 	nazwa: {
 		type: String,
-		required: true,
 	},
 	autor: {
 		type: String,
-		required: true,
 	},
 	wydawnictwo: {
 		type: String,
-		required: true,
 	},
 	seria: {
+		type: String,
+	},
+	gatunek: {
 		type: String,
 	},
 	ilosc_stron: {
@@ -80,6 +87,29 @@ app.get("/api/ksiazki", async (req, res) => {
 	try {
 		const books = await Books.find();
 		res.json(books);
+	} catch (err) {
+		res.status(500).send(err);
+	}
+});
+
+app.post(`/api/ksiazka/:nazwa_pliku/dodaj-recenzje`, async (req, res) => {
+	try {
+		const { ocena, recenzja, nazwa_uzytkownika } = req.body;
+		const book = await Books.findOneAndUpdate(
+			{ nazwa_pliku: req.params.nazwa_pliku },
+			{
+				$push: {
+					opinie: {
+						ocena,
+						recenzja,
+						nazwa_uzytkownika,
+						data_dodania: new Date(),
+					},
+				},
+			},
+			{ new: true }
+		);
+		res.json(book);
 	} catch (err) {
 		res.status(500).send(err);
 	}

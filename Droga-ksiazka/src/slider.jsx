@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import StarRating from "./starRates";
+import SmallBook from "./smallBook";
 
 const Slider = () => {
 	const [books, setBooks] = useState([]);
@@ -31,49 +31,34 @@ const Slider = () => {
 	};
 
 	return (
-		<section className='others-books-container mt-10 w-10/12'>
-			<div className='book-desctibe-line border-t border-gray-300 h-0'></div>
-			<div className='other-books-header mb-5 mt-10 pb-3 grid grid-cols-2 border-b border-gray-300'>
-				<div className='other-books-title text-start'>
-					<span className='text-2xl'>Inne książki:</span>
+		<section className="others-books-container mt-10 w-10/12">
+			<div className="book-desctibe-line border-t border-gray-300 h-0"></div>
+			<div className="other-books-header mb-5 mt-10 pb-3 grid grid-cols-2 border-b border-gray-300">
+				<div className="other-books-title text-start">
+					<span className="text-2xl">Inne książki:</span>
 				</div>
-				<div className='other-books-nav-btn text-end'>
-					<span className='other-books-navigation-btn'>
+				<div className="other-books-nav-btn text-end">
+					<span className="other-books-navigation-btn">
 						<button
 							onClick={handlePrevClick}
-							className='border-gray-300 border w-10 h-10 p-1 text-2xl rounded-md'>
-							<i className='fa-solid fa-angle-left'></i>
+							className="border-gray-300 border w-10 h-10 p-1 text-2xl rounded-md"
+						>
+							<i className="fa-solid fa-angle-left"></i>
 						</button>
 						<button
 							onClick={handleNextClick}
-							className='border-gray-300 border w-10 h-10 p-1 text-2xl rounded-md'>
-							<i className='fa-solid fa-angle-right'></i>
+							className="border-gray-300 border w-10 h-10 p-1 text-2xl rounded-md"
+						>
+							<i className="fa-solid fa-angle-right"></i>
 						</button>
 					</span>
 				</div>
 			</div>
-			<div className='other-books-body grid place-items-center'>
-				<div className='other-book-title-slider w-10/12 grid grid-cols-5 gap-10'>
-					{books.slice(currentIndex, currentIndex + 5).map((book, index) => {
-						const averageRating =
-							book.opinie && book.opinie.length > 0 ? book.opinie.reduce((acc, opinia) => acc + opinia.ocena, 0) / book.opinie.length: 0;
-							
-						return (
-							<div key={index} className='other-book-slider-element '>
-								<a href={`/ksiazka/${book.nazwa_pliku}`} className='row-span-2'>
-									<img
-										src={`/assets/books/${book.nazwa_pliku}.jpg`}
-										className='slider-book-img'
-										alt={book.nazwa}
-									/>
-								</a>
-								<p className='slider-book-name'>{book.nazwa}</p>
-								<p className='text-xs'>
-									<StarRating averageRating={averageRating} />
-								</p>
-							</div>
-						);
-					})}
+			<div className="other-books-body grid place-items-center">
+				<div className="other-book-title-slider w-10/12 grid grid-cols-5 gap-10">
+					{books.slice(currentIndex, currentIndex + 5).map((book, index) => (
+						<SmallBook key={index} book={book} />
+					))}
 				</div>
 			</div>
 		</section>

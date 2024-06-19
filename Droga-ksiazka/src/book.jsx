@@ -26,25 +26,23 @@ const Book = () => {
 	if (!book) {
 		return <div>Ładowanie...</div>;
 	}
-
 	const averageRating =
-        book.opinie.reduce((acc, opinia) => acc + opinia.ocena, 0) /
-        book.opinie.length;
-
+		book.opinie.reduce((acc, opinia) => acc + opinia.ocena, 0) /
+		book.opinie.length;
 	return (
-		<section className='main mt-16'>
-			<div className='book-container pl-10  grid grid-cols-4'>
-				<div className='book-img'>
+		<section className="main mt-16">
+			<div className="book-container pl-10  grid grid-cols-4">
+				<div className="book-img">
 					<img src={`/assets/books/${book.nazwa_pliku}.jpg`} alt={book.nazwa} />
 				</div>
-				<div className='book-info pl-20 pt-5 col-span-2'>
-					<span className='book-name text-2xl font-semibold'>{book.nazwa}</span>
-					<span className='book-author block font-medium'>{book.autor}</span>
-					<p className='book-rate mt-4 text-s'>
-                        <StarRating averageRating={averageRating} />
-                        <span className='ml-5'>Ilość ocen: {book.opinie.length}</span>
-                    </p>
-					<div className='book-info-other grid grid-cols-2'>
+				<div className="book-info pl-20 pt-5 col-span-2">
+					<span className="book-name text-2xl font-semibold">{book.nazwa}</span>
+					<span className="book-author block font-medium">{book.autor}</span>
+					<p className="book-rate mt-4 text-s">
+						<StarRating averageRating={averageRating} />
+						<span className="ml-5">Ilość ocen: {book.opinie.length}</span>
+					</p>
+					<div className="book-info-other grid grid-cols-2">
 						{book.wydawnictwo !== "" && (
 							<span>Wydawnictwo: {book.wydawnictwo}</span>
 						)}
@@ -53,31 +51,34 @@ const Book = () => {
 						{book.rok_wydania !== "" && (
 							<span>Rok wydania: {book.rok_wydania}</span>
 						)}
+						{book.gatunek !== "" && <span>Gatunek: {book.gatunek}</span>}
+
 						{book.ilosc_stron !== "" && (
 							<span>Ilość stron: {book.ilosc_stron}</span>
 						)}
 					</div>
 
-					<div className='download mt-10'>
+					<div className="download mt-10">
 						<span>Aby pobrać w formacie epub kliknij poniżej</span>
-						<div>
-						</div>
+						<div></div>
 						<button>
-							<i className='fa-solid fa-download text-4xl mt-5'></i>
+							<i className="fa-solid fa-download text-4xl mt-5"></i>
 						</button>
 					</div>
 				</div>
 			</div>
-			<section className='book-describe mt-16 w-full'>
-				<span className='text-2xl'>Opis</span>
-				<div className='book-desctibe-line border-t border-gray-200 h-0'></div>
-				<div className='describe'>
-					<span className='w-3/4 inline-block mt-5 text-lg'>{book.opis}</span>
+			<section className="book-describe mt-16 w-full">
+				<span className="text-2xl">Opis</span>
+				<div className="book-desctibe-line border-t border-gray-200 h-0"></div>
+				<div className="describe">
+					<span className="w-3/4 inline-block mt-5 text-lg">{book.opis}</span>
 				</div>
-				<div className='author-about mt-6'>
-					<span className='text-2xl block'>O autorze</span>
-					<span className='w-3/4 inline-block mt-3'>{book.o_autorze}</span>
-				</div>
+				{book.o_autorze !== "" && (
+					<div className="author-about mt-6">
+						<span className="text-2xl block">O autorze</span>
+						<span className="w-3/4 inline-block mt-3">{book.o_autorze}</span>
+					</div>
+				)}
 			</section>
 		</section>
 	);
