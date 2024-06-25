@@ -8,7 +8,7 @@ const SmallBook = ({ book }) => {
 			  book.opinie.length
 			: 0;
 	return (
-		<div className="other-book-slider-element ">
+		<div className="other-book-slider-element place-items-center">
 			<a href={`/ksiazka/${book.nazwa_pliku}`} className="row-span-2">
 				<img
 					src={`/assets/books/${book.nazwa_pliku}.jpg`}

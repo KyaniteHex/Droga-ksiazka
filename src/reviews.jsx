@@ -60,16 +60,108 @@ const Reviews = () => {
 	const percentageReview = (averageRating / 5) * 100;
 	const percentageRate = (book, rateNumber) => {
 		const ratingArray = book.opinie.map((opinia) => opinia.ocena);
-		return (
+		return Math.floor(
 			(ratingArray.filter((v) => v === rateNumber).length /
 				ratingArray.length) *
-			100
+				100
 		);
 	};
+	console.log(percentageRate(book, 5), "%");
 
 	return (
 		<>
 			<section className="reviews w-10/12 mt-10 border-t border-gray-300">
+				<div className="reviewes-title mt-10 text-start">
+					<span className="text-2xl">Recenzje: </span>
+				</div>
+				<div className="reviews-summary flex place-items-center mt-5">
+					<div className="">
+						<div className="rate-rounded rounded-full border border-orange-400 w-32 h-32 flex place-items-center place-content-center">
+							<div
+								className="bg-orange-200 rounded-full place-content-center"
+								style={{ height: percentageReview, width: percentageReview }}
+							>
+								<span className="rate-ratio text-xl font-bold">4.9</span>
+							</div>
+						</div>
+					</div>
+					<div className="w-full">
+						<div className="rate-stars-scale grid grid-rows-5 gap-3 mt-5 place-items-end">
+							<div className="rating-slider flex w-3/4">
+								<span className="text-sm">
+									5 <i className="fa-solid fa-star text-orange-400"></i>
+								</span>
+								<div className="bg-orange-200 mx-2 w-2/3 rounded-lg">
+									<div
+										className={`bg-orange-400 w-[${percentageRate(
+											book,
+											5
+										)}%\]  h-full rounded-lg`}
+									></div>
+								</div>
+								<span className="flex">{percentageRate(book, 5)}%</span>
+							</div>
+
+							<div className="rating-slider flex w-3/4">
+								<span className="text-sm">
+									4 <i className="fa-solid fa-star  text-orange-400"></i>
+								</span>
+								<div className="bg-orange-200 mx-2 w-2/3 rounded-lg">
+									<div
+										className={`bg-orange-400 w-[${percentageRate(
+											book,
+											4
+										)}%\] h-full rounded-lg`}
+									></div>
+								</div>
+								<span className="flex">{percentageRate(book, 4)}%</span>
+							</div>
+							<div className="rating-slider flex w-3/4">
+								<span className="text-sm">
+									3 <i className="fa-solid fa-star text-orange-400"></i>
+								</span>
+								<div className="bg-orange-200 mx-2 w-2/3 rounded-lg">
+									<div
+										className={`bg-orange-400 w-[${percentageRate(
+											book,
+											3
+										)}%\]  h-full rounded-lg`}
+									></div>
+								</div>
+								<span className="flex">{percentageRate(book, 3)}%</span>
+							</div>
+							<div className="rating-slider flex w-3/4">
+								<span className="text-sm">
+									2 <i className="fa-solid fa-star text-orange-400"></i>
+								</span>
+								<div className="bg-orange-200 mx-2 w-2/3 rounded-lg">
+									<div
+										className={`bg-orange-400 w-[${percentageRate(
+											book,
+											2
+										)}%\]  h-full rounded-lg`}
+									></div>
+								</div>
+								<span className="flex">{percentageRate(book, 2)}%</span>
+							</div>
+							<div className="rating-slider flex w-3/4">
+								<span className="text-sm">
+									1 <i className="fa-solid fa-star text-orange-400"></i>
+								</span>
+								<div className="bg-orange-200 mx-2 w-2/3 rounded-lg">
+									<div
+										className={`bg-orange-400 w-[${percentageRate(
+											book,
+											1
+										)}%\]  h-full rounded-lg`}
+									></div>
+								</div>
+								<span className="flex">{percentageRate(book, 1)}%</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="book-desctibe-line mt-16 border-t border-gray-200 h-0"></div>
 				<div className="add-recent w-5/6 mt-16 p-6 mx-auto rounded-lg">
 					<div className="reviews-comment text-center">
 						<span className="text-xl font-">

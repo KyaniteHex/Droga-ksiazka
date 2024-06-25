@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useBootstrapPrefix } from "react-bootstrap/esm/ThemeProvider";
 
 const Searchbar = () => {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -13,8 +11,9 @@ const Searchbar = () => {
 
 	const handleSearch = () => {
 		if (searchTerm.trim()) {
-			navigate(`/ksiazka/${searchTerm}`);
+			navigate(`/search/${searchTerm}`);
 		}
+		window.location.reload();
 	};
 	const handleKeyDown = (e) => {
 		if (event.key === "Enter") {
@@ -33,6 +32,7 @@ const Searchbar = () => {
 					onKeyDown={handleKeyDown}
 				/>
 				<button
+					type="submit"
 					className="w-1/12 rounded-r-lg bg-[#ff7f50] h-10 inline-table"
 					onClick={handleSearch}
 				>
